@@ -115,5 +115,5 @@ class ReferenceData(BaseEndpoint):
         date_time_sent = datetime.datetime.utcnow()
         response = self.request("GET", self.client.urn_edge, 'navigation', params=params, session=session)
         return self.process_response(
-            response.json().get('countries', []), resources.MetaTags, date_time_sent, datetime.datetime.utcnow()
+            response.json(), resources.MetaTags, date_time_sent, datetime.datetime.utcnow()
         )

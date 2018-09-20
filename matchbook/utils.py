@@ -46,8 +46,9 @@ def clean_locals(params):
     return clean_params
 
 
-def check_call_complete(response):
-    return response.get('total', 0) < response.get('per-page', 20)
+def check_call_complete(response, target):
+    return response.get('total', 0) <= \
+        response.get('offset', 0) + len(response.get(target, []))
 
 
 def check_status_code(response, codes=None):

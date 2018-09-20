@@ -30,13 +30,22 @@ class BaseEndpoint(object):
         )
         check_status_code(response)
         if ('per-page' in params.keys()) and target:
-            resp_data = response.json().get(target, [])
-            while not check_call_complete(response.json()):
-                params['offset'] += response.json().get('total', 0) + 1
+            jresponse = response.json()
+            targets = jresponse.get(target, [])
+            resp_data = targets[:]
+
+            while not check_call_complete(jresponse, target):
+                params['offset'] += jresponse.get('offset', 0) + len(targets)
                 response = session.request(
                     request_method, request_url, params=params, data=json.dumps(data), headers=self.client.headers
                 )
-                resp_data += response.json().get(target, [])
+
+                jresponse = response.json()
+                targets = jresponse.get(target, [])
+                if not targets:
+                    break
+
+                resp_data += targets
             return resp_data
         else:
             return response

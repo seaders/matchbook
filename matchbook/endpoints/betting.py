@@ -1,4 +1,5 @@
 import datetime
+from typing import List
 
 from matchbook.endpoints.baseendpoint import BaseEndpoint
 from matchbook import resources
@@ -9,7 +10,8 @@ from matchbook.utils import clean_locals
 class Betting(BaseEndpoint):
 
     def get_orders(self, event_ids=None, market_ids=None, runner_ids=None, offer_id=None, offset=0, per_page=500,
-                   interval=None, side=Side.Default, status=Status.Default, session=None):
+                   interval=None, side=Side.Default, status=Status.Default, session=None) \
+            -> List[resources.Order]:
         """
         Get all orders which fit the argument filters.
 

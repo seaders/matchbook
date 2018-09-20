@@ -1,5 +1,6 @@
 
 import datetime
+from typing import List
 
 from matchbook import resources
 from matchbook.utils import clean_locals
@@ -72,7 +73,8 @@ class Reporting(BaseEndpoint):
         )
         return self.process_response(response, resources.TransactionReport, date_time_sent, datetime.datetime.now())
 
-    def get_current_offers(self, sport_ids=None, event_ids=None, market_ids=None, offset=0, per_page=500, session=None):
+    def get_current_offers(self, sport_ids=None, event_ids=None, market_ids=None, offset=0, per_page=500, session=None) \
+            -> List[resources.Order]:
         """
         Get a list of current offers i.e. offers on markets yet to be settled.
         
